@@ -6,6 +6,7 @@ import {
   flip,
   offset,
   Placement,
+  shift,
   size,
   useFloating,
 } from '@floating-ui/react';
@@ -80,7 +81,10 @@ export const Dropdown = ({
   const { refs, floatingStyles, placement } = useFloating({
     placement: dropdownPlacement,
     middleware: [
-      flip(),
+      flip({
+        padding: 32,
+        boundary: document.querySelector('#root') ?? undefined,
+      }),
       size({
         padding: 32,
         apply: ({ availableHeight }) => {
@@ -88,6 +92,10 @@ export const Dropdown = ({
             setDropdownMaxHeight(availableHeight);
           });
         },
+        boundary: document.querySelector('#root') ?? undefined,
+      }),
+      shift({
+        padding: 32, // 0 by default
         boundary: document.querySelector('#root') ?? undefined,
       }),
       ...offsetMiddlewares,
