@@ -123,13 +123,6 @@ export const SignInUpGlobalScopeForm = () => {
           fullWidth
         />
         <HorizontalSeparator visible={false} />
-        <MainButton
-          Icon={() => <IconMicrosoft size={theme.icon.size.lg} />}
-          title="Continue with Microsoft"
-          onClick={signInWithMicrosoft}
-          fullWidth
-        />
-        <HorizontalSeparator visible={false} />
         <HorizontalSeparator visible />
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <FormProvider {...form}>
