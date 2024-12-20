@@ -32,7 +32,7 @@ export type NavigationDrawerItemProps = {
   subItemState?: NavigationDrawerSubItemState;
   to?: string;
   onClick?: () => void;
-  Icon: IconComponent | ((props: TablerIconsProps) => JSX.Element);
+  Icon?: IconComponent | ((props: TablerIconsProps) => JSX.Element);
   active?: boolean;
   danger?: boolean;
   soon?: boolean;
@@ -77,11 +77,7 @@ const StyledItem = styled('button', {
   font-family: ${({ theme }) => theme.font.family};
   font-size: ${({ theme }) => theme.font.size.md};
 
-  padding-bottom: ${({ theme }) => theme.spacing(1)};
-  padding-left: ${({ theme }) => theme.spacing(1)};
-  padding-right: ${({ theme }) => theme.spacing(0.5)};
-  padding-top: ${({ theme }) => theme.spacing(1)};
-
+  padding: ${({ theme }) => theme.spacing(1)};
   margin-top: ${({ indentationLevel }) =>
     indentationLevel === 2 ? '2px' : '0'};
 
@@ -253,6 +249,7 @@ export const NavigationDrawerItem = ({
   const [isNavigationDrawerExpanded, setIsNavigationDrawerExpanded] =
     useRecoilState(isNavigationDrawerExpandedState);
   const showBreadcrumb = indentationLevel === 2;
+  const showStyledSpacer = !!soon || !!count || !!keyboard || !!rightOptions;
 
   const handleItemClick = () => {
     if (isMobile) {
@@ -316,7 +313,7 @@ export const NavigationDrawerItem = ({
             </StyledEllipsisContainer>
           </StyledLabelParent>
 
-          <StyledSpacer />
+          {showStyledSpacer && <StyledSpacer />}
 
           {soon && (
             <NavigationDrawerAnimatedCollapseWrapper>
@@ -337,8 +334,9 @@ export const NavigationDrawerItem = ({
               </StyledKeyBoardShortcut>
             </NavigationDrawerAnimatedCollapseWrapper>
           )}
-          <NavigationDrawerAnimatedCollapseWrapper>
-            {rightOptions && (
+
+          {rightOptions && (
+            <NavigationDrawerAnimatedCollapseWrapper>
               <StyledRightOptionsContainer
                 onClick={(e) => {
                   e.stopPropagation();
@@ -349,8 +347,8 @@ export const NavigationDrawerItem = ({
                   {rightOptions}
                 </StyledRightOptionsVisbility>
               </StyledRightOptionsContainer>
-            )}
-          </NavigationDrawerAnimatedCollapseWrapper>
+            </NavigationDrawerAnimatedCollapseWrapper>
+          )}
         </StyledItemElementsContainer>
       </StyledItem>
     </StyledNavigationDrawerItemContainer>
